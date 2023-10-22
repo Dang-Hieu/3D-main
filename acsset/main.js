@@ -11,7 +11,6 @@ class MyThreeJSApp {
         this.camera.position.set(2, 30, 30);
 
         this.clock = new THREE.Clock(true);
-        this.time = new YUKA.Time();
 
         this.setupScene();
         this.setupRenderer();
@@ -46,35 +45,52 @@ class MyThreeJSApp {
         this.ambientLight = new THREE.AmbientLight(0x333333);
         this.scene.add(this.ambientLight);
 
-        this.spotLight = new THREE.SpotLight(0xFFFFFF);
-        this.scene.add(this.spotLight);
+        // this.directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+        // this.scene.add(this.directionalLight);
 
-        this.spotLight.castShadow = true;
-        this.spotLight.angle = 0.2;
-        this.spotLight.penumbra = 0.5;
-        this.spotLight.intensity = 0.4;
-        this.spotLight.position.set(0, 100, 10);
+        // this.directionalLight.position.set(0, 50, 0);
+        // this.directionalLight.castShadow = true;
 
-        // this.light = new THREE.PointLight(0xffffff, 10, 100);
-        // this.light.position.y = 100;
-        // this.scene.add(this.light);
+        // this.dLightHelper = new THREE.DirectionalLightHelper(this.directionalLight, 50);
+        // this.scene.add(this.dLightHelper);
+        // this.dLightShadowHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera);
+        // this.scene.add(this.dLightShadowHelper);
 
-        this.sLightHelper = new THREE.SpotLightHelper(this.spotLight);
-        this.scene.add(this.sLightHelper);
+        // this.spotLight = new THREE.SpotLight(0xFFFFFF);
+        // this.scene.add(this.spotLight);
+
+        // this.spotLight.castShadow = true;
+        // this.spotLight.angle = 0.2;
+        // this.spotLight.penumbra = 0.5;
+        // this.spotLight.intensity = 0.4;
+        // this.spotLight.position.set(0, 100, 10);
+
+        // this.sLightHelper = new THREE.SpotLightHelper(this.spotLight);
+        // this.scene.add(this.sLightHelper);
+
+        this.light = new THREE.PointLight(0xffffff, 3, 20);
+        this.light.position.y = 15;
+        this.scene.add(this.light);
+        this.light.castShadow = true;
+
+        this.lightHelper = new THREE.PointLightHelper(this.light, 1);
+        this.scene.add(this.lightHelper);
     }
 
     setupObjects() {
         this.pGeo = new THREE.PlaneGeometry(50, 50);
+        this.pGeo.rotateX(Math.PI * -0.5);
         this.pMat = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            roughness: 1,
-            metalness: 0,
+            // roughness: 1,
+            // metalness: 0,
             side: THREE.DoubleSide
         });
         this.pMesh= new THREE.Mesh(this.pGeo, this.pMat);
         this.scene.add(this.pMesh);
-        this.pMesh.rotation.x = -0.5 * Math.PI;
+        // this.pMesh.rotation.x = -0.5 * Math.PI;
         this.pMesh.receiveShadow = true;
+        // this.pMesh.castShadow = true;
 
         this.vehicleGeo = new THREE.ConeBufferGeometry(0.2, 1, 20);
         this.vehicleGeo.rotateX(Math.PI * 0.5);
@@ -82,8 +98,9 @@ class MyThreeJSApp {
         this.vehicleMat = new THREE.MeshNormalMaterial({});
         this.vehicleMesh = new THREE.Mesh(this.vehicleGeo, this.vehicleMat);
         this.scene.add(this.vehicleMesh);
-        this.vehicleMesh.matrixAutoUpdate = true;
+        // this.vehicleMesh.matrixAutoUpdate = true;
         this.vehicleMesh.castShadow = true;
+        this.vehicleMesh.position.set(0, 5, 0);
     }
 
 
